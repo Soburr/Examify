@@ -11,8 +11,15 @@ class TeacherProfile extends Model
 
     protected $fillable = [
         'user_id',
-        'subject',   
+        'subjects',   
     ];
+
+    protected function casts(): array
+{
+    return [
+        'subjects' => 'array',
+    ];
+}
 
     /** The teacher (user) this profile belongs to */
     public function user()

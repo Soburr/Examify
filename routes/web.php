@@ -1,36 +1,43 @@
 <?php
 
-use App\Http\Controllers\Student\StudentDashboardController;
-use App\Http\Controllers\Student\StudentExamController;
-use App\Http\Controllers\Student\StudentMaterialController;
-use App\Http\Controllers\Student\StudentPerformanceController;
-use App\Http\Controllers\Student\StudentProfileController;
-use App\Http\Controllers\Student\StudentResultController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Student\StudentAuthController;
 
 
 
-Route::get('/student/register', [StudentAuthController::class, 'showRegister']);
-Route::post('/student/register', [StudentAuthController::class, 'register']);
+Route::prefix('student')->group(function () {
+    Route::get('/register', [App\Http\Controllers\Student\StudentAuthController::class, 'showRegister']);
+    Route::post('/register', [App\Http\Controllers\Student\StudentAuthController::class, 'register']);
 
-Route::get('/student/login', [StudentAuthController::class, 'showLogin'])->name('student.login');
-Route::post('/student/login', [StudentAuthController::class, 'login'])->name('student.login');
+    Route::get('/login', [App\Http\Controllers\Student\StudentAuthController::class, 'showLogin'])->name('student.login');
+    Route::post('/login', [App\Http\Controllers\Student\StudentAuthController::class, 'login'])->name('student.login');
+});
 
+Route::prefix('teacher')->group(function () {
+    Route::get('/sign-up', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'showRegister']);
+    Route::post('/sign-up', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'register']);
+
+    Route::get('/sign-in', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'showLogin'])->name('teacher.login');
+    Route::post('/sign-in', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'login'])->name('teacher.login');
+});
 
 Route::middleware(['auth', 'student'])->prefix('student')->name('student.')->group(function () {
  
-    Route::get('/dashboard',    [StudentDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/exam',         [StudentExamController::class,      'index'])->name('exam');
-    Route::get('/exam/{id}',    [StudentExamController::class,      'start'])->name('exam.start');
-    Route::post('/exam/{id}',   [StudentExamController::class,      'submit'])->name('exam.submit');
-    Route::get('/results',      [StudentResultController::class,    'index'])->name('results');
-    Route::get('/materials',    [StudentMaterialController::class,  'index'])->name('materials');
-    Route::get('/materials/{id}/download', [StudentMaterialController::class, 'download'])->name('materials.download');
-    Route::get('/performance',  [StudentPerformanceController::class, 'index'])->name('performance');
-    Route::get('/profile',      [StudentProfileController::class,  'index'])->name('profile');
-    Route::post('/logout',      [StudentAuthController::class,     'logout'])->name('logout');
+    Route::get('/dashboard',    [App\Http\Controllers\Student\StudentDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/exam',         [App\Http\Controllers\Student\StudentExamController::class,      'index'])->name('exam');
+    Route::get('/exam/{id}',    [App\Http\Controllers\Student\StudentExamController::class,      'start'])->name('exam.start');
+    Route::post('/exam/{id}',   [App\Http\Controllers\Student\StudentExamController::class,      'submit'])->name('exam.submit');
+    Route::get('/results',      [App\Http\Controllers\Student\StudentResultController::class,    'index'])->name('results');
+    Route::get('/materials',    [App\Http\Controllers\Student\StudentMaterialController::class,  'index'])->name('materials');
+    Route::get('/materials/{id}/download', [App\Http\Controllers\Student\StudentMaterialController::class, 'download'])->name('materials.download');
+    Route::get('/performance',  [App\Http\Controllers\Student\StudentPerformanceController::class, 'index'])->name('performance');
+    Route::get('/profile',      [App\Http\Controllers\Student\StudentProfileController::class,  'index'])->name('profile');
+    Route::post('/logout',      [App\Http\Controllers\Student\StudentAuthController::class,     'logout'])->name('logout');
  
+});
+
+Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Teacher\TeacherDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
 });
 
 require __DIR__.'/auth.php';
