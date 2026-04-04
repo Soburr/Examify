@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('student_id')->unique();
+            $table->string('email')->nullable()->unique();
+            $table->string('student_id')->nullable()->unique();
             $table->string('password');
             $table->enum('role', ['student', 'teacher', 'admin'])->default('student');
-            $table->unsignedBigInteger('class_id')->nullable();
-            $table->timestamps();
+            $table->foreignId('class_id')->nullable()->constrained('school_classes')->nullOnDelete();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->timestamps();  
+
         });
 
         Schema::create('sessions', function (Blueprint $table) {

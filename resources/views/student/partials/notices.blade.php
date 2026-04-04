@@ -11,27 +11,8 @@
         @endforeach
     </div>
 @else
-    <div class="notice-list">
-        <div class="notice-item">
-            <div class="notice-dot" style="background:var(--red)"></div>
-            <div>
-                <div class="notice-text"><strong>Upcoming Test</strong> – Mathematics test scheduled for next Monday.</div>
-                <div class="notice-meta">2 hours ago</div>
-            </div>
-        </div>
-        <div class="notice-item">
-            <div class="notice-dot" style="background:var(--amber)"></div>
-            <div>
-                <div class="notice-text"><strong>New Material</strong> – Physics notes for Chapter 6 have been uploaded.</div>
-                <div class="notice-meta">Yesterday</div>
-            </div>
-        </div>
-        <div class="notice-item">
-            <div class="notice-dot" style="background:var(--green)"></div>
-            <div>
-                <div class="notice-text"><strong>Result Published</strong> – English test results are now available.</div>
-                <div class="notice-meta">2 days ago</div>
-            </div>
-        </div>
+    <div class="notice-empty">
+        <div class="notice-icon">📭</div>
+        <div class="notice-message">No new notices at the moment.</div>
     </div>
 @endif
