@@ -37,6 +37,13 @@ Route::middleware(['auth', 'student'])->prefix('student')->name('student.')->gro
 
 Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Teacher\TeacherDashboardController::class, 'index'])->name('dashboard');
+    
+    Route::get('/exams',              [App\Http\Controllers\Teacher\TeacherExamController::class, 'index'])->name('exams.index');
+    Route::get('/exams/create',       [App\Http\Controllers\Teacher\TeacherExamController::class, 'create'])->name('exams.create');
+    Route::post('/exams',             [App\Http\Controllers\Teacher\TeacherExamController::class, 'store'])->name('exam.store');
+    Route::patch('/exams/{id}/toggle',[App\Http\Controllers\Teacher\TeacherExamController::class, 'toggleActive'])->name('exams.toggle');
+    Route::delete('/exams/{id}',      [App\Http\Controllers\Teacher\TeacherExamController::class, 'destroy'])->name('exams.destroy');
+        
     Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
 });
 
