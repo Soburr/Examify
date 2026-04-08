@@ -23,7 +23,8 @@
             @foreach($exams as $exam)
                 <div class="card" style="display:flex; align-items:center;
                             justify-content:space-between; flex-wrap:wrap; gap:14px;">
-
+<a href="{{ route('teacher.exams.submissions', $exam->id) }}"
+   style="text-decoration:none; flex:1;">
                     <div style="display:flex; align-items:center; gap:14px;">
                         <div class="module-icon-wrap blue" style="flex-shrink:0;">📝</div>
                         <div>
@@ -40,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+</a>
 
                     <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
 

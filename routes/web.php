@@ -43,7 +43,8 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
     Route::post('/exams',             [App\Http\Controllers\Teacher\TeacherExamController::class, 'store'])->name('exam.store');
     Route::patch('/exams/{id}/toggle',[App\Http\Controllers\Teacher\TeacherExamController::class, 'toggleActive'])->name('exams.toggle');
     Route::delete('/exams/{id}',      [App\Http\Controllers\Teacher\TeacherExamController::class, 'destroy'])->name('exams.destroy');
-        
+    Route::get('/exams/{id}/submissions', [App\Http\Controllers\Teacher\TeacherExamController::class, 'submissions'])->name('exams.submissions');  
+    
     Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
 });
 

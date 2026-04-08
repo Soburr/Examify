@@ -7,6 +7,7 @@ use App\Models\SchoolClass;
 use App\Models\Test;
 use App\Models\TestQuestion;
 use App\Models\TestOption;
+use App\Models\TestSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,10 +22,8 @@ class TeacherExamController extends Controller
         $teacher  = Auth::user();
         $profile  = $teacher->teacherProfile;
 
-        // Subjects this teacher teaches (array from JSON column)
         $subjects = $profile?->subjects ?? [];
 
-        // All classes available to assign the exam to
         $classes  = SchoolClass::orderBy('name')->get();
 
         return view('teacher.create-exam', compact('subjects', 'classes'));
@@ -50,7 +49,6 @@ class TeacherExamController extends Controller
         DB::transaction(function () use ($request) {
             $teacher = Auth::user();
 
-            // Create the test
             $test = Test::create([
                 'teacher_id'       => $teacher->id,
                 'class_id'         => $request->class_id,
@@ -60,7 +58,6 @@ class TeacherExamController extends Controller
                 'is_active'        => $request->boolean('is_active'),
             ]);
 
-            // Create each question and its options
             foreach ($request->questions as $order => $qData) {
                 $question = TestQuestion::create([
                     'test_id'       => $test->id,
@@ -130,4 +127,34 @@ class TeacherExamController extends Controller
 
         return back()->with('success', 'Exam deleted successfully.');
     }
+
+    public function submissions(int $id)
+{
+    $teacher = Auth::user();
+ 
+    $test = Test::where('id', $id)
+        ->where('teacher_id', $teacher->id)
+        ->with('schoolClass')
+        ->firstOrFail();
+ 
+    $submissions = TestSubmission::where('test_id', $test->id)
+        ->with('student')
+        ->orderByDesc('percentage')
+        ->get();
+ 
+    $totalStudents = \App\Models\User::where('class_id', $test->class_id)
+        ->where('role', 'student')
+        ->count();
+ 
+    $avgScore = $submissions->isNotEmpty()
+        ? round($submissions->avg('percentage'))
+        : 0;
+ 
+    return view('teacher.submissions', compact(
+        'test',
+        'submissions',
+        'totalStudents',
+        'avgScore'
+    ));
+}
 }
