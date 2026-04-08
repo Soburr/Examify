@@ -20,13 +20,8 @@
             <span class="nav-icon">📝</span> Create a Test
         </a>
 
-        <a href="{{ route('student.results') }}"
-           class="nav-item {{ request()->routeIs('student.results') ? 'active' : '' }}">
-            <span class="nav-icon">📊</span> View Results
-        </a>
-
-        <a href="{{ route('student.materials') }}"
-           class="nav-item {{ request()->routeIs('student.materials') ? 'active' : '' }}">
+        <a href="{{ route('teacher.materials.index') }}"
+           class="nav-item {{ request()->routeIs('teacher.materials.*') ? 'active' : '' }}">
             <span class="nav-icon">📁</span> Study Materials
         </a>
 
