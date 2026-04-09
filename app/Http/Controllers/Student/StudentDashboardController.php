@@ -36,14 +36,14 @@ class StudentDashboardController extends Controller
             ? round($performance->avg())
             : null;
 
-        // Notices (optional — if you have a notices/announcements table)
-        $notices = \App\Models\Notice::where(function ($q) use ($user) {
-                $q->where('class_id', $user->class_id)
-                  ->orWhereNull('class_id'); // school-wide notices
-            })
-            ->latest()
-            ->take(5)
-            ->get();
+       $notices = \App\Models\Notice::with(['author', 'schoolClass'])
+            ->where(function ($q) use ($user) {
+            $q->where('class_id', $user->class_id)
+            ->orWhereNull('class_id');
+       })
+       ->latest()
+       ->take(5)
+       ->get();
 
         return view('student.dashboard', [
             'user'                => $user,

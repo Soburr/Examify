@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Teacher\TeacherNoticeController;
+use App\Http\Controllers\Teacher\TeacherMaterialController;
+use App\Http\Controllers\Teacher\TeacherExamController;
 
 
 
@@ -38,16 +41,20 @@ Route::middleware(['auth', 'student'])->prefix('student')->name('student.')->gro
 Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Teacher\TeacherDashboardController::class, 'index'])->name('dashboard');
     
-    Route::get('/exams',              [App\Http\Controllers\Teacher\TeacherExamController::class, 'index'])->name('exams.index');
-    Route::get('/exams/create',       [App\Http\Controllers\Teacher\TeacherExamController::class, 'create'])->name('exams.create');
-    Route::post('/exams',             [App\Http\Controllers\Teacher\TeacherExamController::class, 'store'])->name('exam.store');
-    Route::patch('/exams/{id}/toggle',[App\Http\Controllers\Teacher\TeacherExamController::class, 'toggleActive'])->name('exams.toggle');
-    Route::delete('/exams/{id}',      [App\Http\Controllers\Teacher\TeacherExamController::class, 'destroy'])->name('exams.destroy');
-    Route::get('/exams/{id}/submissions', [App\Http\Controllers\Teacher\TeacherExamController::class, 'submissions'])->name('exams.submissions');  
+    Route::get('/exams',              [TeacherExamController::class, 'index'])->name('exams.index');
+    Route::get('/exams/create',       [TeacherExamController::class, 'create'])->name('exams.create');
+    Route::post('/exams',             [TeacherExamController::class, 'store'])->name('exam.store');
+    Route::patch('/exams/{id}/toggle',[TeacherExamController::class, 'toggleActive'])->name('exams.toggle');
+    Route::delete('/exams/{id}',      [TeacherExamController::class, 'destroy'])->name('exams.destroy');
+    Route::get('/exams/{id}/submissions', [TeacherExamController::class, 'submissions'])->name('exams.submissions');  
     
-    Route::get('/materials',          [App\Http\Controllers\Teacher\TeacherMaterialController::class, 'index'])->name('materials.index');
-    Route::post('/materials',         [App\Http\Controllers\Teacher\TeacherMaterialController::class, 'store'])->name('materials.store');
-    Route::delete('/materials/{id}',  [App\Http\Controllers\Teacher\TeacherMaterialController::class, 'destroy'])->name('materials.destroy');
+    Route::get('/materials',          [TeacherMaterialController::class, 'index'])->name('materials.index');
+    Route::post('/materials',         [TeacherMaterialController::class, 'store'])->name('materials.store');
+    Route::delete('/materials/{id}',  [TeacherMaterialController::class, 'destroy'])->name('materials.destroy');
+
+    Route::get('/notices',          [TeacherNoticeController::class, 'index'])->name('notices.index');
+    Route::post('/notices',         [TeacherNoticeController::class, 'store'])->name('notices.store');
+    Route::delete('/notices/{id}',  [TeacherNoticeController::class, 'destroy'])->name('notices.destroy');
 
     Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
 });

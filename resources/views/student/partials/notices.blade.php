@@ -2,10 +2,20 @@
     <div class="notice-list">
         @foreach($notices as $notice)
             <div class="notice-item">
-                <div class="notice-dot" style="background:var(--blue-500)"></div>
+                <div class="notice-dot"
+                     style="background:{{ $notice->class_id ? 'var(--blue-500)' : 'var(--amber)' }}">
+                </div>
                 <div>
-                    <div class="notice-text">{{ $notice->content }}</div>
-                    <div class="notice-meta">{{ $notice->created_at->diffForHumans() }}</div>
+                    <div class="notice-text">
+                        <strong>{{ $notice->title }}</strong> — {{ $notice->content }}
+                    </div>
+                    <div class="notice-meta">
+                        By {{ $notice->author->name ?? 'School' }}
+                        &nbsp;·&nbsp;
+                        {{ $notice->created_at->diffForHumans() }}
+                        &nbsp;·&nbsp;
+                        {{ $notice->class_id ? ($notice->schoolClass->name ?? '') : '🏫 School-wide' }}
+                    </div>
                 </div>
             </div>
         @endforeach

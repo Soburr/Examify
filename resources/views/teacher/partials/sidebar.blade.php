@@ -25,6 +25,11 @@
             <span class="nav-icon">📁</span> Study Materials
         </a>
 
+        <a href="{{ route('teacher.notices.index') }}"
+           class="nav-item {{ request()->routeIs('teacher.notices.*') ? 'active' : '' }}">
+            <span class="nav-icon">🔔</span> Notices
+        </a>
+
         <a href="{{ route('student.performance') }}"
            class="nav-item {{ request()->routeIs('student.performance') ? 'active' : '' }}">
             <span class="nav-icon">📈</span> Performance
