@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,8 @@ class StudentAuthController extends Controller
    
     public function showRegister()
     {
-        return view('auth.student-register');
+        $classes = SchoolClass::all();
+        return view('auth.student-register', compact('classes'));
     }
 
     public function register(Request $request)

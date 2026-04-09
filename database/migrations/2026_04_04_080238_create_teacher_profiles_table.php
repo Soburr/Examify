@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->json('subjects'); 
+            $table->boolean('is_class_teacher')->default(false);
+            $table->foreignId('assigned_class_id')->nullable()
+                  ->constrained('school_classes')
+                  ->nullOnDelete();
             $table->timestamps();
         });
     }

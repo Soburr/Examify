@@ -100,24 +100,12 @@
 
         <input type="text" name="student_id" placeholder="Student ID (e.g REG123X)" value="{{ old('student_id') }}" required>
 
-        <select name="class_id" required>
-            <option value="">Select Class</option>
-            <option value="1">SS1A</option>
-            <option value="2">SS1B</option>
-            <option value="3">SS1C</option>
-            <option value="4">SS1D</option>
-            <option value="5">SS1E</option>
-            <option value="6">SS1F</option>
-            <option value="7">SS2A</option>
-            <option value="8">SS2B</option>
-            <option value="9">SS2C</option>
-            <option value="10">SS2D</option>
-            <option value="11">SS3A</option>
-            <option value="12">SS3B</option>
-            <option value="13">SS3C</option>
-            <option value="14">SS3D</option>
-
-        </select>
+<select name="class_id" required>
+    <option value="">Select Class</option>
+    @foreach($classes as $class)
+        <option value="{{ $class->id }}">{{ $class->name }}</option>
+    @endforeach
+</select>
 
         <input type="password" name="password" placeholder="Password" required>
 

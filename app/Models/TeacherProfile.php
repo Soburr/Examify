@@ -12,12 +12,15 @@ class TeacherProfile extends Model
     protected $fillable = [
         'user_id',
         'subjects',   
+        'is_class_teacher',
+        'assigned_class_id',
     ];
 
     protected function casts(): array
 {
     return [
         'subjects' => 'array',
+        'is_class_teacher' => 'boolean',
     ];
 }
 
@@ -38,4 +41,9 @@ class TeacherProfile extends Model
     {
         return $this->hasMany(StudyMaterial::class, 'teacher_id', 'user_id');
     }
+
+    public function assignedClass()
+{
+    return $this->belongsTo(SchoolClass::class, 'assigned_class_id');
+}
 }

@@ -27,7 +27,18 @@
 
         <a href="{{ route('teacher.notices.index') }}"
            class="nav-item {{ request()->routeIs('teacher.notices.*') ? 'active' : '' }}">
-            <span class="nav-icon">🔔</span> Notices
+            <span class="nav-icon">🔕</span> Notices
+        </a>
+
+
+    </div>
+
+    <div class="nav-section">
+        <div class="nav-label">Students</div>
+
+        <a href="{{ route('teacher.students.index') }}"
+           class="nav-item {{ request()->routeIs('teacher.students.index') ? 'active' : '' }}">
+            <span class="nav-icon">🧑‍🎓</span> My Students
         </a>
 
         <a href="{{ route('student.performance') }}"

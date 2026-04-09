@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Teacher\TeacherNoticeController;
 use App\Http\Controllers\Teacher\TeacherMaterialController;
 use App\Http\Controllers\Teacher\TeacherExamController;
+use App\Http\Controllers\Teacher\TeacherStudentController;
 
 
 
@@ -55,6 +56,10 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
     Route::get('/notices',          [TeacherNoticeController::class, 'index'])->name('notices.index');
     Route::post('/notices',         [TeacherNoticeController::class, 'store'])->name('notices.store');
     Route::delete('/notices/{id}',  [TeacherNoticeController::class, 'destroy'])->name('notices.destroy');
+
+    Route::get('/students',              [TeacherStudentController::class, 'index'])->name('students.index');
+    Route::get('/students/{id}',         [TeacherStudentController::class, 'show'])->name('students.show');
+    Route::put('/students/{id}/password',[TeacherStudentController::class, 'resetPassword'])->name('students.password');
 
     Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
 });
