@@ -15,8 +15,7 @@
 </div>
 
 {{-- SUMMARY CARDS --}}
-<div class="perf-grid" style="display:grid; grid-template-columns:repeat(2,1fr);
-            gap:12px; margin-bottom:28px;">
+<div class="perf-grid" style="margin-bottom:28px;">
 
     <div class="card" style="text-align:center; padding:20px 16px;">
         <div style="font-size:28px; margin-bottom:6px;">📝</div>
@@ -48,9 +47,7 @@
             {{ $bestClass ? $bestClass['name'] : '—' }}
         </div>
         @if($bestClass)
-            <div style="font-size:11.5px; color:var(--gray-400);">
-                {{ $bestClass['avg'] }}% avg
-            </div>
+            <div style="font-size:11.5px; color:var(--gray-400);">{{ $bestClass['avg'] }}% avg</div>
         @endif
         <div style="font-size:12.5px; color:var(--gray-400); margin-top:3px;">Best Class</div>
     </div>
@@ -76,7 +73,7 @@
         <div style="font-size:12.5px; color:var(--gray-400); margin-bottom:20px;">
             Average score per class across all your tests
         </div>
-        <div style="position:relative; height:260px; max-width:100%;">
+        <div style="position:relative; height:220px; max-width:100%;">
             <canvas id="classChart"></canvas>
         </div>
     </div>
@@ -93,11 +90,25 @@
             <table style="width:100%; border-collapse:collapse; font-size:13.5px;">
                 <thead>
                     <tr style="background:var(--blue-50); border-bottom:1px solid var(--gray-200);">
-                        <th style="padding:12px 16px; text-align:left; font-weight:700; color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">Test</th>
-                        <th style="padding:12px 16px; text-align:left; font-weight:700; color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">Class</th>
-                        <th class="hide-mobile" style="padding:12px 16px; text-align:center; font-weight:700; color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">Submissions</th>
-                        <th style="padding:12px 16px; text-align:center; font-weight:700; color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">Avg.</th>
-                        <th style="padding:12px 16px; text-align:center; font-weight:700; color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;"></th>
+                        <th style="padding:12px 16px; text-align:left; font-weight:700;
+                                   color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">
+                            Test
+                        </th>
+                        <th class="hide-mobile" style="padding:12px 16px; text-align:left; font-weight:700;
+                                   color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">
+                            Class
+                        </th>
+                        <th class="hide-mobile" style="padding:12px 16px; text-align:center; font-weight:700;
+                                   color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">
+                            Submissions
+                        </th>
+                        <th style="padding:12px 16px; text-align:center; font-weight:700;
+                                   color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">
+                            Avg.
+                        </th>
+                        <th style="padding:12px 16px; text-align:center; font-weight:700;
+                                   color:var(--blue-900); font-family:'Plus Jakarta Sans',sans-serif;">
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,37 +120,54 @@
                         <tr style="border-bottom:1px solid var(--gray-100); transition:background .15s;"
                             onmouseover="this.style.background='var(--blue-50)'"
                             onmouseout="this.style.background=''">
+
                             <td style="padding:12px 16px;">
-                                <div style="font-weight:600; color:var(--blue-900);">{{ $test->title }}</div>
-                                <div style="font-size:11.5px; color:var(--gray-400); margin-top:2px;">{{ $test->subject }}</div>
+                                <div style="font-weight:600; color:var(--blue-900);">
+                                    {{ $test->title }}
+                                </div>
+                                <div style="font-size:11.5px; color:var(--gray-400); margin-top:2px;">
+                                    {{ $test->subject }}
+                                    {{-- Show class inline on mobile since class column is hidden --}}
+                                    <span class="show-mobile">
+                                        &nbsp;·&nbsp; {{ $test->schoolClass?->name ?? '—' }}
+                                    </span>
+                                </div>
                             </td>
-                            <td style="padding:12px 16px; color:var(--gray-500);">
+
+                            <td class="hide-mobile" style="padding:12px 16px; color:var(--gray-500);">
                                 {{ $test->schoolClass?->name ?? '—' }}
                             </td>
-                            <td class="hide-mobile" style="padding:12px 16px; text-align:center; font-weight:700; color:var(--blue-900);">
+
+                            <td class="hide-mobile" style="padding:12px 16px; text-align:center;
+                                       font-weight:700; color:var(--blue-900);">
                                 {{ $sub }}
                             </td>
+
                             <td style="padding:12px 16px; text-align:center;">
                                 @if($sub > 0)
-                                    <span style="font-weight:700; color:{{ $avg >= 70 ? 'var(--green)' : ($avg >= 40 ? 'var(--blue-600)' : 'var(--red)') }}">
+                                    <span style="font-weight:700;
+                                        color:{{ $avg >= 70 ? 'var(--green)' : ($avg >= 40 ? 'var(--blue-600)' : 'var(--red)') }}">
                                         {{ $avg }}%
                                     </span>
                                 @else
                                     <span style="color:var(--gray-400); font-size:12px;">—</span>
                                 @endif
                             </td>
+
                             <td style="padding:12px 16px; text-align:center;">
                                 @if($sub > 0)
                                     <a href="{{ route('teacher.performance.show', $test->id) }}"
-                                       style="padding:6px 13px; border-radius:7px; font-size:12px; font-weight:600;
-                                              text-decoration:none; background:var(--blue-50); color:var(--blue-600);
-                                              border:1.5px solid var(--blue-100);">
+                                       style="padding:6px 13px; border-radius:7px; font-size:12px;
+                                              font-weight:600; text-decoration:none;
+                                              background:var(--blue-50); color:var(--blue-600);
+                                              border:1.5px solid var(--blue-100); white-space:nowrap;">
                                         📈 Details
                                     </a>
                                 @else
                                     <span style="font-size:12px; color:var(--gray-300);">No data</span>
                                 @endif
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -159,15 +187,29 @@
 
 @push('styles')
 <style>
+    /* Summary grid — 2 cols mobile, 3 cols tablet, 5 cols desktop */
+    .perf-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+        .perf-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+        .perf-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+
+    /* Hide on mobile */
     @media (max-width: 640px) {
         .hide-mobile { display: none !important; }
+        .show-mobile { display: inline !important; }
     }
-    @media (min-width: 640px) {
-        .perf-grid { grid-template-columns: repeat(3, 1fr) !important; }
-    }
-    @media (min-width: 1024px) {
-        .perf-grid { grid-template-columns: repeat(5, 1fr) !important; }
-    }
+
+    /* Show only on mobile */
+    .show-mobile { display: none; }
 </style>
 @endpush
 
