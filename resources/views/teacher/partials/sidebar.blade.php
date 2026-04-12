@@ -41,8 +41,8 @@
             <span class="nav-icon">🧑‍🎓</span> My Students
         </a>
 
-        <a href="{{ route('student.performance') }}"
-           class="nav-item {{ request()->routeIs('student.performance') ? 'active' : '' }}">
+        <a href="{{ route('teacher.performance.index') }}"
+           class="nav-item {{ request()->routeIs('teacher.performance.*') ? 'active' : '' }}">
             <span class="nav-icon">📈</span> Performance
         </a>
     </div>
@@ -54,14 +54,21 @@
            class="nav-item {{ request()->routeIs('student.profile') ? 'active' : '' }}">
             <span class="nav-icon">👤</span> My Profile
         </a>
-    </div>
 
-    <div class="sidebar-footer">
         <form method="POST" action="{{ route('student.logout') }}">
             @csrf
             <button class="logout-btn" type="submit">
                 <span>🚪</span> Logout
             </button>
         </form>
+    </div>
+
+    <div class="sidebar-footer">
+        <!-- <form method="POST" action="{{ route('student.logout') }}">
+            @csrf
+            <button class="logout-btn" type="submit">
+                <span>🚪</span> Logout
+            </button>
+        </form> -->
     </div>
 </aside>

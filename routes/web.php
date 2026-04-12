@@ -5,6 +5,7 @@ use App\Http\Controllers\Teacher\TeacherNoticeController;
 use App\Http\Controllers\Teacher\TeacherMaterialController;
 use App\Http\Controllers\Teacher\TeacherExamController;
 use App\Http\Controllers\Teacher\TeacherStudentController;
+use App\Http\Controllers\Teacher\TeacherPerformanceController;
 
 
 
@@ -61,6 +62,9 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
     Route::get('/students/{id}',         [TeacherStudentController::class, 'show'])->name('students.show');
     Route::put('/students/{id}/password',[TeacherStudentController::class, 'resetPassword'])->name('students.password');
 
+    Route::get('/performance', [TeacherPerformanceController::class, 'index'])->name('performance.index');
+    Route::get('/performance/{test}', [TeacherPerformanceController::class, 'show'])->name('performance.show');
+    
     Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
 });
 

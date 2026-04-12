@@ -49,10 +49,11 @@ class TestSubmission extends Model
     public function getGradeAttribute(): string
     {
         return match (true) {
-            $this->percentage >= 80 => 'A',
-            $this->percentage >= 70 => 'B',
-            $this->percentage >= 60 => 'C',
-            $this->percentage >= 50 => 'D',
+            $this->percentage >= 70 => 'A',
+            $this->percentage >= 60 => 'B',
+            $this->percentage >= 50 => 'C',
+            $this->percentage >= 44 => 'D',
+            $this->percentage >= 40 => 'E',
             default                 => 'F',
         };
     }
