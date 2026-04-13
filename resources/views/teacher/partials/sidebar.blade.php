@@ -50,12 +50,12 @@
     <div class="nav-section">
         <div class="nav-label">Account</div>
 
-        <a href="{{ route('student.profile') }}"
-           class="nav-item {{ request()->routeIs('student.profile') ? 'active' : '' }}">
+        <a href="{{ route('teacher.profile') }}"
+           class="nav-item {{ request()->routeIs('teacher.profile') ? 'active' : '' }}">
             <span class="nav-icon">👤</span> My Profile
         </a>
 
-        <form method="POST" action="{{ route('student.logout') }}">
+        <form method="POST" action="{{ route('teacher.logout') }}">
             @csrf
             <button class="logout-btn" type="submit">
                 <span>🚪</span> Logout
