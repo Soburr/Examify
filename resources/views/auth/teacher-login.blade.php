@@ -164,7 +164,7 @@
     </form>
 
     <div class="footer">
-        Don't have an account? <a href="/teacher/register">Register here</a>
+        Don't have an account? <a href="/teacher/sign-up">Register here</a>
     </div>
 </div>
 
