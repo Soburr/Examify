@@ -504,6 +504,7 @@ body {
     font-family: inherit;
     transition: background .2s;
     align-self: flex-start;
+    text-decoration: none;
 }
 
 .module-btn:hover { background: var(--blue-700); }
@@ -631,4 +632,15 @@ body {
     .hero { padding: 22px; flex-direction: column; gap: 18px; align-items: flex-start; }
     .hero-badge { align-self: flex-start; }
     .search-box { width: 160px; }
+}
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .profile-layout { grid-template-columns: 1fr; }
 }

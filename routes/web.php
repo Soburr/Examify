@@ -7,6 +7,7 @@ use App\Http\Controllers\Teacher\TeacherExamController;
 use App\Http\Controllers\Teacher\TeacherStudentController;
 use App\Http\Controllers\Teacher\TeacherPerformanceController;
 use App\Http\Controllers\Teacher\TeacherProfileController;
+use App\Http\Controllers\Student\StudentProfileController;
 
 
 
@@ -36,7 +37,9 @@ Route::middleware(['auth', 'student'])->prefix('student')->name('student.')->gro
     Route::get('/materials',    [App\Http\Controllers\Student\StudentMaterialController::class,  'index'])->name('materials');
     Route::get('/materials/{id}/download', [App\Http\Controllers\Student\StudentMaterialController::class, 'download'])->name('materials.download');
     Route::get('/performance',  [App\Http\Controllers\Student\StudentPerformanceController::class, 'index'])->name('performance');
-    Route::get('/profile',      [App\Http\Controllers\Student\StudentProfileController::class,  'index'])->name('profile');
+    Route::get('/profile',          [StudentProfileController::class, 'index'])->name('profile');
+    Route::put('/profile',          [StudentProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [StudentProfileController::class, 'changePassword'])->name('profile.password');
     Route::post('/logout',      [App\Http\Controllers\Student\StudentAuthController::class,     'logout'])->name('logout');
  
 });
