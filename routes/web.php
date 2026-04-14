@@ -8,6 +8,13 @@ use App\Http\Controllers\Teacher\TeacherStudentController;
 use App\Http\Controllers\Teacher\TeacherPerformanceController;
 use App\Http\Controllers\Teacher\TeacherProfileController;
 use App\Http\Controllers\Student\StudentProfileController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminClassController;
+use App\Http\Controllers\Admin\AdminTeacherController;
+use App\Http\Controllers\Admin\AdminStudentController;
+use App\Http\Controllers\Admin\AdminNoticeController;
+use App\Http\Controllers\Admin\AdminProfileController;
 
 
 
@@ -75,6 +82,45 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
     Route::put('/profile/password', [TeacherProfileController::class, 'changePassword'])->name('profile.password');
     
     Route::post('/logout', [App\Http\Controllers\Teacher\TeacherAuthController::class, 'logout'])->name('logout');
+});
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login',  [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
+});
+
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/classes',           [AdminClassController::class, 'index'])->name('classes.index');
+    Route::post('/classes',          [AdminClassController::class, 'store'])->name('classes.store');
+    Route::put('/classes/{id}',      [AdminClassController::class, 'update'])->name('classes.update');
+    Route::delete('/classes/{id}',   [AdminClassController::class, 'destroy'])->name('classes.destroy');
+
+    Route::get('/teachers',                      [AdminTeacherController::class, 'index'])->name('teachers.index');
+    Route::get('/teachers/create',               [AdminTeacherController::class, 'create'])->name('teachers.create');
+    Route::post('/teachers',                     [AdminTeacherController::class, 'store'])->name('teachers.store');
+    Route::patch('/teachers/{id}/toggle',        [AdminTeacherController::class, 'toggle'])->name('teachers.toggle');
+    Route::put('/teachers/{id}/password',        [AdminTeacherController::class, 'resetPassword'])->name('teachers.password');
+    Route::delete('/teachers/{id}',              [AdminTeacherController::class, 'destroy'])->name('teachers.destroy');
+
+    Route::get('/students',                      [AdminStudentController::class, 'index'])->name('students.index');
+    Route::put('/students/{id}/password',        [AdminStudentController::class, 'resetPassword'])->name('students.password');
+    Route::delete('/students/{id}',              [AdminStudentController::class, 'destroy'])->name('students.destroy');
+
+    Route::get('/notices',           [AdminNoticeController::class, 'index'])->name('notices.index');
+    Route::post('/notices',          [AdminNoticeController::class, 'store'])->name('notices.store');
+    Route::delete('/notices/{id}',   [AdminNoticeController::class, 'destroy'])->name('notices.destroy');
+
+    Route::get('/profile',           [AdminProfileController::class, 'index'])->name('profile');
+    Route::put('/profile',           [AdminProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password',  [AdminProfileController::class, 'changePassword'])->name('profile.password');
+
 });
 
 require __DIR__.'/auth.php';
