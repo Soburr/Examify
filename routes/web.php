@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminNoticeController;
 use App\Http\Controllers\Admin\AdminProfileController;
 
 
+Route::get('/', [App\Http\Controllers\LandingController::class, 'index']);
 
 Route::prefix('student')->group(function () {
     Route::get('/register', [App\Http\Controllers\Student\StudentAuthController::class, 'showRegister']);
